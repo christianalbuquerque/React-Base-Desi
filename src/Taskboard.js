@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
+import jQuery from 'jquery';
+
 import Estoria from './Estoria';
 import EstoriaForm from './EstoriaForm';
 
 export default class Taskboard extends Component{
+// 
 
     constructor() {
         super();
         this.state = {
-        estorias : [{
-        id: 1,
-        titulo: "Contratar Seguro",
-        descricao: "Como usuario gostaria de contratar ...",
-        pontos: 10}
-        ]}
+        estorias : []
+    }
+    }
+
+    componentDidMount(){
+        this._buscarEstorias();
+    }
+
+    _buscarEstorias(){
+        jQuery.ajax({
+            method: 'GET',
+            url: "http://localhost:3004/estorias",
+            success: (estorias) => {
+            this.setState({estorias})
+            }
+        });
     }
     
     _getEstorias(){
